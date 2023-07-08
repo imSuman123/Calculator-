@@ -3,7 +3,7 @@
 #include <stdlib.h>
 int main()
 {
-    while (10)
+    while (9)
     {
         int x;
         float a, b;
