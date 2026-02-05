@@ -65,9 +65,9 @@ struct ContentView: View {
 
     private func handleTap(_ item: CalculatorButtonType) {
         switch item {
-        case .number(let value):
+        case let .number(value):
             state.inputDigit(value)
-        case .utility(let value):
+        case let .utility(value):
             switch value {
             case "AC":
                 state.clear()
@@ -78,7 +78,7 @@ struct ContentView: View {
             default:
                 break
             }
-        case .operation(let value):
+        case let .operation(value):
             switch value {
             case "+":
                 state.setOperation(.add)
