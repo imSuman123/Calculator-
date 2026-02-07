@@ -64,11 +64,11 @@ struct ContentView: View {
     }
 
     private func handleTap(_ item: CalculatorButtonType) {
-        switch item {
-        case .number(let value):
-            state.inputDigit(value)
-        case .utility(let value):
-            switch value {
+        switch item.kind {
+        case .number:
+            state.inputDigit(item.value)
+        case .utility:
+            switch item.value {
             case "AC":
                 state.clear()
             case "±":
@@ -78,8 +78,8 @@ struct ContentView: View {
             default:
                 break
             }
-        case .operation(let value):
-            switch value {
+        case .operation:
+            switch item.value {
             case "+":
                 state.setOperation(.add)
             case "−":
@@ -98,22 +98,47 @@ struct ContentView: View {
 }
 
 struct CalculatorButtonType: Identifiable {
+    enum Kind { case number, utility, operation }
+
     let id = UUID()
     let title: String
     let background: Color
     let foreground: Color
     let isWide: Bool
+    let kind: Kind
+    let value: String
 
     static func number(_ value: String) -> CalculatorButtonType {
-        CalculatorButtonType(title: value, background: Color(.darkGray), foreground: .white, isWide: value == "0")
+        CalculatorButtonType(
+            title: value,
+            background: Color(.darkGray),
+            foreground: .white,
+            isWide: value == "0",
+            kind: .number,
+            value: value
+        )
     }
 
     static func utility(_ value: String) -> CalculatorButtonType {
-        CalculatorButtonType(title: value, background: Color(.lightGray), foreground: .black, isWide: false)
+        CalculatorButtonType(
+            title: value,
+            background: Color(.lightGray),
+            foreground: .black,
+            isWide: false,
+            kind: .utility,
+            value: value
+        )
     }
 
     static func operation(_ value: String) -> CalculatorButtonType {
-        CalculatorButtonType(title: value, background: .orange, foreground: .white, isWide: false)
+        CalculatorButtonType(
+            title: value,
+            background: .orange,
+            foreground: .white,
+            isWide: false,
+            kind: .operation,
+            value: value
+        )
     }
 }
 
